@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DBConn {
+	//DB커넥션과 관련있는 클래스
+	
 	public static Connection getConnection() {
 		//DB커넥션을 받아오는 메서드
 		Connection conn = null;
