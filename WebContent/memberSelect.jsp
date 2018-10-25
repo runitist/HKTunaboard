@@ -1,5 +1,13 @@
+<%@page import="dbpkg.MemberVO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	List<MemberVO> lv = null;
+	if(request.getAttribute("lv")!=null){
+		lv = (List<MemberVO>)request.getAttribute("lv");
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
