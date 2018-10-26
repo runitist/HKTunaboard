@@ -28,6 +28,18 @@ public class MemberJoinServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		int custno = Integer.parseInt(request.getParameter("custno"));
+		String custname = request.getParameter("custname");
+		String phone = request.getParameter("phone");
+		String address = request.getParameter("address");
+		String joindate = request.getParameter("joindate");
+		String grade = request.getParameter("grade");
+		String city = request.getParameter("city");
+		
+		MemberDAO.joinMember(custno, custname, phone, address, joindate, grade, city);
+		
+		response.sendRedirect("memberSelect");
+		
 	}
 
 }

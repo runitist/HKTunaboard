@@ -1,5 +1,13 @@
+
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	Date today = new Date();
+	SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
+	String todaydate = date.format(today);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +19,9 @@
 	<div class="container">
 		<jsp:include page="header.jsp" />
 		<section class="joinsec">
+			<br />
 			<h3>홈쇼핑 회원 등록</h3>
+			<br />
 			<form name="frm" action="memberJoin" method="post">
 				<table>
 					<tr>
@@ -26,7 +36,7 @@
 					</tr>
 					<tr>
 						<th>회원전화</th>
-						<td><input type="text" name="phone" autocomplete="off"
+						<td><input type="tel" name="phone" autocomplete="off"
 							required="required" value="" /></td>
 					</tr>
 					<tr>
@@ -36,18 +46,18 @@
 					</tr>
 					<tr>
 						<th>가입일자</th>
-						<td><input type="text" name="joindate" autocomplete="off"
-							required="required" value="" /></td>
+						<td><input type="text" readonly="readonly" name="joindate" autocomplete="off"
+							required="required" value="<%=todaydate%>" /></td>
 					</tr>
 					<tr>
 						<th>고객등급[A:VIP,B:일반,C:직원]</th>
 						<td><input type="text" name="grade" autocomplete="off"
-							required="required" value="" /></td>
+							required="required" value="" maxlength="1" /></td>
 					</tr>
 					<tr>
 						<th>도시코드</th>
 						<td><input type="text" name="city" autocomplete="off"
-							required="required" value="" /></td>
+							required="required" value="" maxlength="2" /></td>
 					</tr>
 					<tr>
 						<th></th>
@@ -59,5 +69,11 @@
 		</section>
 		<jsp:include page="footer.jsp" />
 	</div>
+
+	<script type="text/javascript">
+		function frmSubmit() {
+			alert("완료되었습니다.")
+		}
+	</script>
 </body>
 </html>
