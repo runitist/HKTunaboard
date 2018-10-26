@@ -70,10 +70,5 @@
 		<jsp:include page="footer.jsp" />
 	</div>
 
-	<script type="text/javascript">
-		function frmSubmit() {
-			alert("완료되었습니다.")
-		}
-	</script>
 </body>
 </html>

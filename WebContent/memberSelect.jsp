@@ -1,3 +1,4 @@
+<%@page import="dbpkg.MemberDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="dbpkg.MemberVO"%>
 <%@page import="java.util.List"%>
@@ -36,16 +37,16 @@
 					<th>거주지역</th>
 				</tr>
 				<%
-					for (int i=0; i < lv.size(); i++) {
+					for (int i = 0; i < lv.size(); i++) {
 				%>
 				<tr>
-					<td><%=lv.get(i).getCustno() %></td>
-					<td><%=lv.get(i).getCustname() %></td>
-					<td><%=lv.get(i).getPhone() %></td>
-					<td><%=lv.get(i).getAddress() %></td>
-					<td><%=lv.get(i).getJoindate() %></td>
-					<td><%=lv.get(i).getGrade() %></td>
-					<td><%=lv.get(i).getCity() %></td>
+					<td><a href="memberMod?index=<%=i%>"><%=lv.get(i).getCustno()%></a></td>
+					<td><%=lv.get(i).getCustname()%></td>
+					<td><%=lv.get(i).getPhone()%></td>
+					<td><%=lv.get(i).getAddress()%></td>
+					<td><%=lv.get(i).getJoindate()%></td>
+					<td><%=MemberDAO.changeGrade(lv.get(i).getGrade())%></td>
+					<td><%=lv.get(i).getCity()%></td>
 				</tr>
 				<%
 					}

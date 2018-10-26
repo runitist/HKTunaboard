@@ -78,14 +78,16 @@ public class MemberDAO {
 		PreparedStatement ps = null;
 
 		try {
-			String sql = "select mem.custno, mem.custname, mem.grade, SUM(mon.price) as totalprice from member_tbl_02 mem join money_tbl_02 mon on mem.custno=mon.custno group by mem.custno, mem.custname, mem.grade order by totalprice desc";
+			String sql = "select mem.custno, mem.custname, mem.grade, SUM(mon.price) as totalprice "
+					+ "from member_tbl_02 mem join money_tbl_02 mon on mem.custno=mon.custno "
+					+ "group by mem.custno, mem.custname, mem.grade order by totalprice desc";
 
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				int custno = rs.getInt(1);
 				String custname = rs.getString(2);
-				String grade = rs.getString(3);
+				String grade = changeGrade(rs.getString(3));
 				int totalprice = rs.getInt(4);
 				slv.add(new MemberSaleVO(custno, custname, grade, totalprice));
 			}
@@ -106,8 +108,8 @@ public class MemberDAO {
 		System.out.println("[joinMember 메서드 실행]");
 		Connection conn = DBConn.getConnection();
 		PreparedStatement ps = null;
-		
-		try{
+
+		try {
 			String sql = "insert into member_tbl_02 values (?,?,?,?,?,?,?)";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, custno);
@@ -118,15 +120,52 @@ public class MemberDAO {
 			ps.setString(6, grade);
 			ps.setString(7, city);
 			ps.execute();
-			
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			System.out.println("멤버 가입 실패");
 			e.printStackTrace();
-		}finally{
+		} finally {
 			DBConn.closeConn(null, ps, conn);
 		}
 
 		System.out.println("[joinMember 메서드 종료]");
+	}
+
+	public static String changeGrade(String grade) {
+		if (grade.equals("a") || grade.equals("A")) {
+			grade = "VIP";
+		} else if (grade.equals("b") || grade.equals("B")) {
+			grade = "일반";
+		} else if (grade.equals("c") || grade.equals("C")) {
+			grade = "직원";
+		}
+		return grade;
+	}
+
+	public static void updateMember(int custno, String custname, String phone,
+			String address, String joindate, String grade, String city) {
+		System.out.println("[updateMember 메소드 실행]");
+		Connection conn = DBConn.getConnection();
+		PreparedStatement ps = null;
+		try {
+			String sql = "update member_tbl_02 set custname = ?, phone = ?, address = ?, grade = ?, city = ? where custno = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, custname);
+			ps.setString(2, phone);
+			ps.setString(3, address);
+			ps.setString(4, grade);
+			ps.setString(5, city);
+			ps.setInt(6, custno);
+			ps.execute();
+			System.out.println("업데이트 성공");
+		} catch (Exception e) {
+			System.out.println("업데이트 실패");
+			e.printStackTrace();
+		} finally {
+			DBConn.closeConn(null, ps, conn);
+		}
+
+		System.out.println("[updateMember 메소드 종료]");
 	}
 
 }
